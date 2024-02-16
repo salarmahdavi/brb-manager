@@ -1,0 +1,51 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <div class="login-container">
+    <h1>Add User</h1>
+    
+    {% if message %}
+      <div class="alert alert-danger error-message" role="alert">
+        {% if message is iterable %}
+          <ul>
+            {% for msg in message %}
+              <li>{{ msg }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          {{ message }}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if success %}
+
+      <p style="color: greenyellow">User Added Succeefully!</p>
+
+    {% endif %}
+    
+    <form action="/users/addUser" method="POST" class="login-form">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="type">Select User Type:</label>
+        <select name="type" id="type">
+            <option value="user">user</option>
+            <option value="admin">admin</option>
+            <option value="powerUser">powerUser</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Add User</button>
+    </form>
+  </div>
+{% endblock %}

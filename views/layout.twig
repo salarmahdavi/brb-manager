@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ title }}</title>
+  <link rel='stylesheet' href='/stylesheets/style.css'>
+
+  {% block add_style %}{% endblock %}
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <span class="navbar-brand">Breaks Control System</span>
+      <ul class="navbar-nav">
+        {% if not isLoggedIn %}
+        <li class="nav-item">
+          <a href="/users/login" class="nav-link">Login</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="/users/logout" class="nav-link">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link">Queue</a>
+        </li>
+        <li class="nav-item">
+          <a href="/users/editPassword" class="nav-link">New Password</a>
+        </li>
+        {% if isAdmin %}
+        <li class="nav-item">
+          <a href="/users/addUser" class="nav-link">Add user</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="/users/list" class="nav-link">Users list</a>
+        </li>
+        {% endif %}
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  {# Modals #}
+  <!-- Modal for entering break time -->
+  <div id="breakTimeModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="breakTime-close">&times;</span>
+        <h2>Enter Break Time</h2>
+      </div>
+      <div class="modal-body">
+        <label for="breakMinutes">Minutes:</label>
+        <input type="number" id="breakMinutes" class="normalized-input" min="0"><br><br>
+        <label for="breakSeconds">Seconds:</label>
+        <input type="number" id="breakSeconds" class="normalized-input" min="0">
+      </div>
+      <div class="modal-footer">
+        <button class="action-button" id="cancel-breakTime">Cancel</button>
+        <button class="action-button" id="confirm-breakTime">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for updating BRB limit -->
+  <div id="brbLimitUpdateModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="newBrb-close">&times;</span>
+        <h2>Update BRB Limit</h2>
+      </div>
+      <div class="modal-body">
+        <label for="newBrbLimit">New BRB Limit:</label>
+        <input type="number" id="newBrbLimit" class="normalized-input" min="0">
+      </div>
+      <div class="modal-footer">
+        <button class="action-button" id="cancel-brbLimitUpdate">Cancel</button>
+        <button class="action-button" id="confirm-brbLimitUpdate">Update</button>
+      </div>
+    </div>
+  </div>
+  {# End Modals #}
+
+  {% block content %}{% endblock %}
+
+  <script src="/socket.io.min.js"></script>
+  <script>
+    var user = "{{ user._id | default("
+    ") | raw }}";
+    var userType = "{{ user.type | default("
+    ") | raw }}";
+  </script>
+  <script src="/javascripts/client.js"></script>
+
+</body>
+
+</html>

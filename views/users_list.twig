@@ -1,0 +1,101 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+  <div class="container">
+    <h1>Users List</h1>
+    
+    {% if success %}
+      <div class="alert alert-success" role="alert">
+        {{ success }}
+      </div>
+    {% endif %}
+
+    <table class="table" style="color: #fefefe;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>User Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.type }}</td>
+            <td>
+              <a href="/users/editUser/{{ user._id }}" class="btn btn-primary">Edit</a>
+              {% if user.type != 'admin' %}
+                <form action="/users/removeUser/{{ user._id }}" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+              {% else %}
+                <span class="text-muted">Admin</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% block add_style %}
+
+<style>
+
+.container {
+    margin: 50px auto;
+    width: 80%;
+    background-color: #343434;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #212121;
+    color: white;
+}
+
+.btn {
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-danger:hover {
+    opacity: 0.8;
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+<div id="columnsContainer">
+   <div id="leftColumn">
+      {% if not user %}
+      <p>User is not logged in</p>
+      <a href="/login">Login</a>
+      {% else %}
+      <p>Welcome, {{ user.name }}</p>
+      {% endif %}
+   </div>
+   <div id="middleColumn">
+      <div id="onBrbQueueDisplay" class="queue-display">
+         <div class="queue-title">On BRB (2 is allowed):</div>
+         <div id="onBrbQueueContent"></div>
+      </div>
+      <div id="canGoQueueDisplay" class="queue-display">
+         <div class="queue-title">Currently on BRB:</div>
+         <div id="canGoQueueContent"></div>
+      </div>
+      <div id="waitingQueueDisplay" class="queue-display">
+         <div id="waitingQueueContent"></div>
+      </div>
+      <!-- Buttons -->
+      <button id="brb6Button" class="action-button" disabled>BRB 6</button>
+      <button id="brb12Button" class="action-button" disabled>BRB 12</button>
+      <button id="startButton" class="action-button" disabled>Start</button>
+      <button id="backButton" class="action-button" disabled>Cancel</button> <!-- Default text -->
+   </div>
+   <div id="rightColumn">
+      <div id="usersWithBrbDisplay">
+         <h3 id="totalRestListTitle">List of users: </h3>
+
+         <ul id="totalRestList">
+         </ol>
+      </div>
+   </div>
+</div>
+{% endblock %}
